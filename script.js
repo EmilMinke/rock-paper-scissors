@@ -2,12 +2,15 @@
 // CREATE a function that returns a string of either "Rock", "Paper" or "Scissors"
 // which depends on the stored number.
 // CREATE a function that takes a user input and returns it.
-// The user input is their choice between "Rock", "Paper" and "Scissors".
+// The user input is their choice between "Rock", "Paper" and "Scissors"
+// CREATE two variables for human score and computer score and initialize them with the value of 0;
 
 const ROCK = "Rock";
 const PAPER = "Paper";
 const SCISSORS = "Scissors";
 
+let humanScore = 0;
+let computerScore = 0;
 let randomNumber = Math.floor(Math.random() * 100) + 1;
 
 function getComputerChoice() {
