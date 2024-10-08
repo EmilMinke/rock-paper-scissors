@@ -1,19 +1,27 @@
 // CREATE a variable that stores a random whole number between 1 and 100.
-// CREATE a function that returns a string of either "rock", "paper" or "scissors"
+// CREATE a function that returns a string of either "Rock", "Paper" or "Scissors"
 // which depends on the stored number.
 
+const ROCK = "Rock";
+const PAPER = "Paper";
+const SCISSORS = "Scissors";
 
 let randomNumber = Math.floor(Math.random() * 100) + 1;
 
 function getComputerChoice() {
     if (randomNumber <= 33) {
-        return "Rock"
+        return ROCK;
     } else if (randomNumber <= 66 && randomNumber > 33) {
-        return "Paper"
+        return PAPER;
     } else {
-        return "Scissors"
+        return SCISSORS;
     }
 }
+
+//console.log(getComputerChoice());git
+
+//CREATE a function that takes a user input and returns it.
+// The user input is their choice between "Rock", "Paper" and "Scissors". 
 
 // Plan or pseudocode your solution.
 // Write the code.
