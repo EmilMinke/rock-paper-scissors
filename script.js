@@ -1,19 +1,12 @@
-const ROCK = "Rock";
-const PAPER = "Paper";
-const SCISSORS = "Scissors";
 
 let humanScore = 0;
 let computerScore = 0;
 let randomNumber = Math.floor(Math.random() * 100) + 1;
 
-function getComputerChoice() {
-    if (randomNumber <= 33) {
-        return ROCK;
-    } else if (randomNumber <= 66 && randomNumber > 33) {
-        return PAPER;
-    } else {
-        return SCISSORS;
-    }
+function getComputerChoice(computerChoice) {
+    return (computerChoice <= 33) ? "Rock" :
+    (computerChoice <= 66 && computerChoice > 33) ? "Paper" :
+    "Scissors";
 }
 
 function getHumanChoice(){
