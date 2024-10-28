@@ -1,43 +1,48 @@
-function getComputerChoice() {
-  const randomNumber = Math.floor(Math.random() * 3) + 1;
+const WINNING_SCORE = 5;
 
-  if (randomNumber === 1) {
-    return "rock";
-  } else if (randomNumber === 2) {
-    return "paper";
-  } else {
-    return "scissors";
-  }
+function getComputerChoice() {
+  const choices = ["rock", "paper", "scissors"];
+  const randomIndex = Math.floor(Math.random() * choices.length);
+  return choices[randomIndex];
 }
 
 const resultsDiv = document.getElementById("results");
-
 let humanScore = 0;
 let computerScore = 0;
 
-function playRound(humanChoice, computerChoice) {
-  const choiceMessage = `You chose: ${humanChoice}, Computer chose: ${computerChoice}`;
-  displayResult(choiceMessage);
+function playRound(humanChoice) {
+  const computerChoice = getComputerChoice();
+  const result = determineWinner(humanChoice, computerChoice);
+  updateScore(result.winnerType, result.message);
+}
 
+function determineWinner(humanChoice, computerChoice) {
   if (humanChoice === computerChoice) {
-    displayResult(`It's a tie! Both chose ${humanChoice}.`);
-    return "tie";
+    return {
+      message: `It's a tie! Both chose ${humanChoice}.`,
+      winnerType: "tie",
+    };
   }
 
-  const winCondition =
-    (humanChoice === "rock" && computerChoice === "scissors") ||
-    (humanChoice === "paper" && computerChoice === "rock") ||
-    (humanChoice === "scissors" && computerChoice === "paper");
+  const winConditions = {
+    rock: "scissors",
+    paper: "rock",
+    scissors: "paper",
+  };
 
-  if (winCondition) {
-    displayResult(
-      `You win! ${capitalize(humanChoice)} beats ${computerChoice}!`
-    );
-    return "win";
-  }
+  const isHumanWinner = winConditions[humanChoice] === computerChoice;
 
-  displayResult(`You lose! ${capitalize(computerChoice)} beats ${humanChoice}!`);
-  return "lose";
+  return {
+    message: isHumanWinner
+      ? `You win! ${capitalize(humanChoice)} beats ${computerChoice}!`
+      : `You lose! ${capitalize(computerChoice)} beats ${humanChoice}!`,
+    winnerType:
+      winConditions[humanChoice] === computerChoice ? "human" : "computer",
+  };
+}
+
+function clearDisplay() {
+  resultsDiv.innerHTML = "";
 }
 
 function displayResult(message) {
@@ -46,41 +51,51 @@ function displayResult(message) {
   resultsDiv.appendChild(resultMessage);
 }
 
-function updateScore(result) {
-  if (result === "win") {
+function updateScore(winnerType, resultMessage) {
+  if (winnerType === "human") {
     humanScore++;
-  } else if (result === "lose") {
+  } else if (winnerType === "computer") {
     computerScore++;
   }
 
-  const scoreMessage = `Current Scores - Human: ${humanScore}, Computer: ${computerScore}`;
-  resultsDiv.innerHTML = `<p>${scoreMessage}</p>`;
+  clearDisplay();
+  displayResult(resultMessage);
+  displayResult(
+    `Current Scores - Human: ${humanScore}, Computer: ${computerScore}`
+  );
 
-  if (humanScore === 5 || computerScore === 5) {
-    const winner = humanScore > computerScore ? "Congratulations! You won!" : "Sorry! Losercity, the Computer won the game!";
-    displayResult(winner);
-    humanScore = 0;
-    computerScore = 0;
+  if (humanScore === WINNING_SCORE || computerScore === WINNING_SCORE) {
+    displayFinalWinner();
+    resetScores();
   }
+}
+
+function displayFinalWinner() {
+  const finalMessage =
+    humanScore > computerScore
+      ? "Congratulations! You Won!"
+      : "Sorry! The Computer won the game!";
+
+  displayResult(finalMessage);
+}
+
+function resetScores() {
+  humanScore = 0;
+  computerScore = 0;
 }
 
 function capitalize(word) {
   return word.at(0).toUpperCase() + word.slice(1);
 }
 
-document.getElementById("rockButton").addEventListener("click", () => {
-  const result = playRound("rock", getComputerChoice());
-  updateScore(result);
-});
+document
+  .getElementById("rockButton")
+  .addEventListener("click", () => playRound("rock"));
 
+document
+  .getElementById("paperButton")
+  .addEventListener("click", () => playRound("paper"));
 
-document.getElementById("paperButton").addEventListener("click", () => {
-  const result = playRound("paper", getComputerChoice());
-  updateScore(result);
-});
-
-
-document.getElementById("scissorsButton").addEventListener("click", () => {
-  const result = playRound("scissors", getComputerChoice());
-  updateScore(result);
-});
+document
+  .getElementById("scissorsButton")
+  .addEventListener("click", () => playRound("scissors"));
