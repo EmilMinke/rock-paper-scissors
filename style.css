@@ -1,0 +1,14 @@
+button {
+    padding: 10px 20px; /* Adjust padding as needed */
+    margin: 5px; /* Space between buttons */
+    border: none; /* Removes default border */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #007BFF; /* Button color */
+    color: white; /* Text color */
+    font-size: 16px; /* Text size */
+    cursor: pointer; /* Pointer on hover */
+  }
+  
+  button:hover {
+    background-color: #0056b3; /* Darker color on hover */
+  }

@@ -88,14 +88,28 @@ function displayEndgameButtons() {
   const playAgainButton = document.createElement("button");
   playAgainButton.textContent = "Play Again";
   playAgainButton.addEventListener("click", resetGame);
+  applyButtonsStyles(playAgainButton);
 
   const exitButton = document.createElement("button");
   exitButton.textContent = "Exit";
   exitButton.addEventListener("click", () => {
-    window.location.reload();
+    window.close();
+    alert("You may need to close this tab manually.")
   });
+  applyButtonsStyles(exitButton);
 
   resultsDiv.append(playAgainButton, exitButton);
+}
+
+function applyButtonsStyles(button) {
+  button.style.padding = "10px 20px"; // Match the padding
+  button.style.margin = "5px"; // Space between buttons
+  button.style.border = "none"; // Removes default border
+  button.style.borderRadius = "5px"; // Rounded corners
+  button.style.backgroundColor = "#007BFF"; // Button color
+  button.style.color = "white"; // Text color
+  button.style.fontSize = "16px"; // Text size
+  button.style.cursor = "pointer"; // Pointer on hover
 }
 
 function resetScores() {
