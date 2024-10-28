@@ -7,6 +7,10 @@ function getComputerChoice() {
 }
 
 const resultsDiv = document.getElementById("results");
+const rockButton = document.getElementById("rockButton");
+const paperButton = document.getElementById("paperButton");
+const scissorsButton = document.getElementById("scissorsButton");
+
 let humanScore = 0;
 let computerScore = 0;
 
@@ -66,7 +70,6 @@ function updateScore(winnerType, resultMessage) {
 
   if (humanScore === WINNING_SCORE || computerScore === WINNING_SCORE) {
     displayFinalWinner();
-    resetScores();
   }
 }
 
@@ -77,6 +80,22 @@ function displayFinalWinner() {
       : "Sorry! The Computer won the game!";
 
   displayResult(finalMessage);
+  displayEndgameButtons();
+  disableGameButtons();
+}
+
+function displayEndgameButtons() {
+  const playAgainButton = document.createElement("button");
+  playAgainButton.textContent = "Play Again";
+  playAgainButton.addEventListener("click", resetGame);
+
+  const exitButton = document.createElement("button");
+  exitButton.textContent = "Exit";
+  exitButton.addEventListener("click", () => {
+    window.location.reload();
+  });
+
+  resultsDiv.append(playAgainButton, exitButton);
 }
 
 function resetScores() {
@@ -84,18 +103,31 @@ function resetScores() {
   computerScore = 0;
 }
 
+function resetGame() {
+  resetScores();
+  clearDisplay();
+  displayResult("Game has been reset. Start again!");
+  enableGameButtons();
+}
+
+function disableGameButtons() {
+  rockButton.disabled = true;
+  paperButton.disabled = true;
+  scissorsButton.disabled = true;
+}
+
+function enableGameButtons() {
+  rockButton.disabled = false;
+  paperButton.disabled = false;
+  scissorsButton.disabled = false;
+}
+
 function capitalize(word) {
   return word.at(0).toUpperCase() + word.slice(1);
 }
 
-document
-  .getElementById("rockButton")
-  .addEventListener("click", () => playRound("rock"));
+rockButton.addEventListener("click", () => playRound("rock"));
 
-document
-  .getElementById("paperButton")
-  .addEventListener("click", () => playRound("paper"));
+paperButton.addEventListener("click", () => playRound("paper"));
 
-document
-  .getElementById("scissorsButton")
-  .addEventListener("click", () => playRound("scissors"));
+scissorsButton.addEventListener("click", () => playRound("scissors"));
